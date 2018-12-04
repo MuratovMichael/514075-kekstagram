@@ -17,7 +17,7 @@ var commentsUsers = [
     name: 'Дима'
   },
   {
-    avatar: 'mg/avatar-4.svg',
+    avatar: 'img/avatar-4.svg',
     message: 'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
     name: 'Анна'
   },
@@ -27,7 +27,7 @@ var commentsUsers = [
     name: 'Денис'
   },
   {
-    avatar: 'mg/avatar-6.svg',
+    avatar: 'img/avatar-6.svg',
     message: 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
     name: 'Михаил'
   }
@@ -87,32 +87,28 @@ var renderPictures = function (picture) {
 
 renderPictures(pictures);
 
-var showFillElement = function (element) {
-  var bigPicture = document.querySelector('.big-picture').content;
-  bigPicture.classList.remove('hidden');
-  var socialElement = bigPicture.cloneNode(true);
-  socialElement.querySelector('.big-picture__img').src = element.url;
-  socialElement.querySelector('.likes-count').textContent = element.likes;
-  socialElement.querySelector('.comments-count').src = element.comments;
-  return socialElement;
-};
-
-var renderComments = function (element) {
+var renderComments = function (comments) {
   var socialComments = document.querySelector('.social__comments'); // Блок куда будут вставляться фотографии
-  var socialCommentItem = document.querySelector('.social__comment').content;
-  var elementComment = socialCommentItem.cloneNode(true);
-  socialCommentItem.appendChild(showFillElement(pictures[0]));
-  elementComment.querySelector('.social__picture').src = 'img/avatar-' + getRandomInRange(1, 6) + '.svg';
-  elementComment.querySelector('.social__text').textContent = element.comments;
+  var socialCommentItem = document.querySelector('.social__comment');
+  socialComments.innerHTML = '';
+  socialCommentItem.querySelector('.social__picture').src = comments.avatar;
+  socialCommentItem.querySelector('.social__text').textContent = comments.message;
   socialComments.appendChild(socialCommentItem);
 };
 
-renderComments(pictures);
+var showFillElement = function (element) {
+  var bigPicture = document.querySelector('.big-picture');
+  bigPicture.classList.remove('hidden');
+  bigPicture.querySelector('.big-picture__img img').src = element.url;
+  bigPicture.querySelector('.likes-count').textContent = element.likes;
+  renderComments(element.comments);
+};
+
+
+showFillElement(pictures[0])
 
 var socialCommentsCount = document.querySelector('.social__comment-count');
-socialCommentsCount.classlist.remove('social__comment-count');
 socialCommentsCount.classList.add('visually-hidden');
 
 var commentsLoader = document.querySelector('.comments-loader');
-commentsLoader.classList.remove('comments-loader');
 commentsLoader.classlist.add('visually-hidden');
