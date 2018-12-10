@@ -104,26 +104,27 @@ var showFillElement = function (element) {
   renderComments(element.comments);
 };
 
-//showFillElement(pictures[0])
-
 var socialCommentsCount = document.querySelector('.social__comment-count');
 socialCommentsCount.classList.add('visually-hidden');
 
 var commentsLoader = document.querySelector('.comments-loader');
 commentsLoader.classList.add('visually-hidden');
 
+
 // Обработка событий ----------------------------------------------------
 
-var imageUpload = document.querySelector('.img-upload'); // Родительский элемент
+
+var pictureContainer = document.querySelector('.pictures'); // Родительский элемент
+var imageUpload = document.querySelector('.img-upload');
 var uploadFile = document.querySelector('#upload-file'); // Загрузка изображения
 var uploadOverlay = document.querySelector('.img-upload__overlay'); // Форма для редактирования изображения
-var uploadCancel = document.querySelector('.img-upload__cancel');    // Кнопка закрытия формы
+var uploadCancel = document.querySelector('.img-upload__cancel'); // Кнопка закрытия формы
 var effectLevelPin = document.querySelector('.effect-level__pin'); // Кнопка изменения глубины эффекта фотографии
 var image = document.querySelector('.big-picture__img img'); // Большое изображение
 
 var selectedImg;
 
-imageUpload.addEventListener('click', function (evt) {
+pictureContainer.addEventListener('click', function (evt) {
   var target = evt.target;
 
   if (target.tagName === 'img') {
@@ -149,20 +150,6 @@ uploadFile.addEventListener('change', function (evt) {
 // Закрытие изображения
 uploadCancel.addEventListener('click', function () {
   uploadOverlay.classList.add('hidden');
-});
-
-effectLevelPin.addEventListener('mouseup', function (evt) {
-  evt.preventDefault();
-
-  var startCoords = {
-    x: evt.clientX,
-    y: evt.clientY
-  };
-
-  var shift = {
-    x: startCoords.x - moveEvt.clientX,
-    x: startCoords.y - moveEvt.clientY
-  };
 });
 
 // Открытие полноэкранного изображения
