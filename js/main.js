@@ -115,47 +115,45 @@ commentsLoader.classList.add('visually-hidden');
 
 
 var pictureContainer = document.querySelector('.pictures'); // Родительский элемент
-var imageUpload = document.querySelector('.img-upload');
-var uploadFile = document.querySelector('#upload-file'); // Загрузка изображения
-var uploadOverlay = document.querySelector('.img-upload__overlay'); // Форма для редактирования изображения
-var uploadCancel = document.querySelector('.img-upload__cancel'); // Кнопка закрытия формы
-var effectLevelPin = document.querySelector('.effect-level__pin'); // Кнопка изменения глубины эффекта фотографии
-var image = document.querySelector('.big-picture__img img'); // Большое изображение
+var bigPictureCancel = document.querySelector('.big-picture__cancel'); // Кнопка закрытия формы
+var bigPicture = document.querySelector('.big-picture'); // Большое изображение
 
-var selectedImg;
-
+// Делегирование
 pictureContainer.addEventListener('click', function (evt) {
   var target = evt.target;
-
-  if (target.tagName === 'img') {
-    renderImage(target);
+  if (target.classList.contains('picture__img')) {
+    var imgUrl = target.getAttribute('src');
+    var pic = pictures.find(function (elem) {
+      return elem.url === imgUrl;
+    });
+    showFillElement(pic);
   }
-
-  function renderImage (node) {
-    if (selectedImg) {
-      selectedImg.classList.remove('hidden');
-    }
-    selectedImg = node;
-    selectedImg.classList.add('hidden');
-  }
-});
-
-/*
-// Открытие изображения
-uploadFile.addEventListener('change', function (evt) {
-  evt.preventDefault();
-  uploadOverlay.classList.remove('hidden');
 });
 
 // Закрытие изображения
-uploadCancel.addEventListener('click', function () {
-  uploadOverlay.classList.add('hidden');
+bigPictureCancel.addEventListener('click', function () {
+  bigPicture.classList.add('hidden');
 });
 
-// Открытие полноэкранного изображения
-var image = document.querySelector('.big-picture__img img');
+/*
+// Процесс отпускания ползунка
+effectLevelPin.addEventListener('mouseup', function (evt) {
+  effectLevelPin.onmouseup = function (evt) {
 
-image.addEventListener('click', function() {
-  bigPicture.classList.remove('hidden');
+    function moveAt (evt) {
+      effectLevelPin.style.left = evt.pageX - effectLevelPin.offsetWidth / 2 + 'px';
+      effectLevelPin.style.top = evt.pageY - effectLevelPin.offsetHeight / 2 + 'px';
+    }
+
+    effectLevel.onmousemove = function(e) {
+      moveAt(evt);
+    }
+
+    effectLevelPin.onmouseup = function() {
+      document.onmousemove = null;
+      effectLevelPin.onmouseup = null;
+    }
+  }
 });
+
 */
